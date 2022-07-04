@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
-
 const mongoose = require('mongoose');
+
+const userRoutes = require('./routes/user');
+
 mongoose.connect('mongodb+srv://admin_pierre:admin_pierre@cluster0.exd8u.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
@@ -15,8 +17,12 @@ app.use((req, res, next) => {
     next();
   });
 
+app.use('/api/user', userRoutes);
+
 app.use((req, res) => {
-    res.json({ message: 'Votre requête a bien été reçue !' }); 
+    res.json({ message: 'Votre requête a bien été reçue 3fois!' }); 
  });
+
+
  
 module.exports = app;
