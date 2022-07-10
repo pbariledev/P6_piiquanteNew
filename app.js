@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
+const path = require('path');
 
 const sauceRoutes = require('./routes/sauce');
 const authRoutes = require('./routes/user');
@@ -36,6 +37,7 @@ app.use(express.json());
 
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 module.exports = app;
