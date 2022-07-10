@@ -34,7 +34,7 @@ app.get('/:id', function (req, res, next) {
 
 app.use(express.json());
 
-app.use('/api/sauce', sauceRoutes);
+app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', authRoutes);
 
 
