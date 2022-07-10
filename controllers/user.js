@@ -4,31 +4,32 @@ const jwt = require('jsonwebtoken');
 
 
 exports.signup = (req, res, next) => {
-   console.log('signup')
-   User.findOne({email: req.body.email}).then(UserFound => {
-    if (UserFound){
-        res.status(400).json({ error })
-    }
-   })
-   bcrypt
-    .hash(req.body.password, 10)
-    .then((hash) => {
-    const userToCreate = new User({
-        email: req.body.email,
-        password: hash
-    });
-    User.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ error }));
+    User.findOne({email: req.body.email}).then(userFound => {
+     if (userFound){
+         res.status(400).json({ message: "Un compte avec cette adresse mail existe déjà." })
+     } else {
+         bcrypt
+         .hash(req.body.password, 10)
+         .then((hash) => {
+         const userToCreate = new User({
+             email: req.body.email,
+             password: hash
+         });
+         userToCreate.save()
+             .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+             .catch(error => res.status(400).json({ error }));
+     })
+     .catch(error => res.status(500).json({ error }));
+   };
+     
     })
-    .catch(error => res.status(500).json({ error }));
-  };
+ }
 
 exports.login = (req, res, next)=> {
     User.findOne({email: req.body.email})
     .then (user => {
-        if( user === null) {
-                res.status(401).json ({message: 'utilisateur non trouvé !'})
+        if (!user) {
+         res.status(401).json ({message: 'utilisateur non trouvé !'})
         } else {
             bcrypt.compare(req.body.password, user.password)
             .then (valid => {
@@ -37,7 +38,11 @@ exports.login = (req, res, next)=> {
                 } else {
                     res.status(200).json ({
                         userId: user._id,
-                        token : 'Token'
+                        token: jwt.sign(
+                            { userId: user._id },
+                            'RANDOM_TOKEN_SECRET',
+                            { expiresIn: '24h' }
+                        )
                     })
                 }
             })

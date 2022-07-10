@@ -6,8 +6,8 @@ exports.createSauce = (req, res, next) => {
       ...req.body
     });
     sauce.save()
-    .then(() => res.status(201).json({ message : 'objet enregistré !'}))
-    .catch(error => res.status(400).json({error}));
+    .then(() => res.status(201).json({ message: 'Sauce enregistrée !'}))
+    .catch(error => res.status(400).json({message: 'objet non créé !'}));
   };
 
   exports.modifySauce =  (req, res, next) => {

@@ -1,8 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+const cors = require('cors');
 
-const sauceRoutes = require('./routes/sauce')
-const authRoutes = require('./routes/user')
+const sauceRoutes = require('./routes/sauce');
+const authRoutes = require('./routes/user');
 
 
 mongoose.connect('mongodb+srv://admin_pierre:admin_pierre@cluster0.exd8u.mongodb.net/?retryWrites=true&w=majority',
@@ -19,6 +21,16 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+app.use(helmet());
+
+app.use(cors())
+app.get('/:id', function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})
+})
+ app.listen(80, function () {
+  console.log('CORS-enabled web server listening on port 80')
+})
 
 app.use(express.json());
 
