@@ -23,7 +23,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
 
 app.use(cors())
 app.get('/:id', function (req, res, next) {
