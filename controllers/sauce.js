@@ -23,7 +23,7 @@ exports.modifySauce = (req, res, next) => {
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   } : { ...req.body };
 
-  delete saucegObject._userId;
+  delete sauceObject._userId;
   Sauce.findOne({_id: req.params.id})
       .then((sauce) => {
           if (sauce.userId != req.auth.userId) {
@@ -40,7 +40,7 @@ exports.modifySauce = (req, res, next) => {
 };
 
 
-  exports.deleteSauce = (req, res, next) => {
+exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
         .then(sauce => {
             if (sauce.userId != req.auth.userId) {
@@ -59,15 +59,19 @@ exports.modifySauce = (req, res, next) => {
         });
  };
 
-  exports.getOneSauce = (req,res,next) => {
+exports.getOneSauce = (req,res,next) => {
     Sauce.findOne({_id: req.params.id})
     .then( sauce => res.status(200).json(sauce))
     .catch(error => res.status(404).json({error}));
   };
 
-  exports.getAllSauces =(req, res, next) => {
+exports.getAllSauces =(req, res, next) => {
     Sauce.find()
     .then(sauces => res.status(200).json(sauces))
     .catch(error => res.status(400).json({error}));
   };
 
+
+  exports.likeDislike =(req, res, next) => {
+    
+  }

@@ -7,8 +7,11 @@ const path = require('path');
 const sauceRoutes = require('./routes/sauce');
 const authRoutes = require('./routes/user');
 
+const dotenv = require("dotenv");
+dotenv.config();
 
-mongoose.connect('mongodb+srv://admin_pierre:admin_pierre@cluster0.exd8u.mongodb.net/?retryWrites=true&w=majority',
+
+mongoose.connect(`mongodb+srv://${process.env.MDB_USERNAME}:${process.env.MDB_PASSWORD}@cluster0.exd8u.mongodb.net/?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -28,12 +31,6 @@ app.use(helmet({
 }));
 
 app.use(cors())
-app.get('/:id', function (req, res, next) {
-  res.json({msg: 'This is CORS-enabled for all origins!'})
-})
- app.listen(80, function () {
-  console.log('CORS-enabled web server listening on port 80')
-})
 
 app.use(express.json());
 
