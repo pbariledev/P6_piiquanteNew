@@ -1,12 +1,11 @@
 const bcrypt = require ('bcrypt');
 const User = require ('../models/user');
 const jwt = require('jsonwebtoken');
-
 const dotenv = require("dotenv");
 dotenv.config();
-
-const MY_CRYPTOJS_SECRET_TOKEN = process.env.CRYPTOJS_SECRET_TOKEN;
-
+const fsPromises = require('fs').promises;
+const path = require ('path');
+const fonctionalError = require('../middleware/errormessage');
 
 exports.signup = (req, res, next) => {
     User.findOne({email: req.body.email}).then(userFound => {
@@ -45,7 +44,7 @@ exports.login = (req, res, next)=> {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            MY_CRYPTOJS_SECRET_TOKEN,
+                            process.env.ACCESS_TOKEN_SECRET,
                             { expiresIn: '24h' }
                         )
                     })

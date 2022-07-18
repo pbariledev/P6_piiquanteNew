@@ -1,10 +1,10 @@
-class messageError extends Error {  
-    constructor (message) {
+class fonctionalError extends Error {  
+    constructor (message,status) {
       super(message)
       Error.captureStackTrace(this, this.constructor);
   
       this.name = this.constructor.name
-      this.status = 400
+      this.status = status
     }
   
     statusCode() {
@@ -12,4 +12,4 @@ class messageError extends Error {
     }
   }
   
-  module.exports = messageError  
+  module.exports = fonctionalError;  
