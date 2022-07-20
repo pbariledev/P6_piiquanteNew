@@ -1,8 +1,6 @@
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
 
-const fonctionalError = require('../middleware/errormessage');
-
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -76,8 +74,7 @@ exports.getAllSauces =(req, res, next) => {
 
 
 
-
-exports.likeDislike = (req, res, next) => {
+  exports.likeDislike = (req, res, next) => {
     if (req.body.like === 1) {  
         Sauce.updateOne( {_id:req.params.id}, { $push: { usersLiked: req.body.userId }, $inc: { likes: +1 } })
             .then(() => res.status(200).json({ message: 'Vous aimez cette sauce !'}))
