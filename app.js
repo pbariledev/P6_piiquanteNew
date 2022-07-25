@@ -4,11 +4,13 @@ const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+
 const sauceRoutes = require('./routes/sauce');
 const authRoutes = require('./routes/user');
 
-const dotenv = require("dotenv");
-dotenv.config();
 
 
 mongoose.connect(`mongodb+srv://${process.env.MDB_USERNAME}:${process.env.MDB_PASSWORD}@${process.env.MDB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,

@@ -16,7 +16,6 @@ exports.createSauce = (req, res, next) => {
   .catch(error => res.status(400).json({message: 'objet non créé !'}));
 };
 
-
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file ? {
       ...JSON.parse(req.body.sauce),
@@ -38,7 +37,6 @@ exports.modifySauce = (req, res, next) => {
           res.status(400).json({ error });
       });
 };
-
 
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id})
